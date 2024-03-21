@@ -1,0 +1,18 @@
+Egikaritze data: 2024-02-09 11:40:57
+Argumentuak: Data path: 3.PraktikaDatuak-20240208\data_2\data_supervised.arff, Model path: modeloa.model, Evaluation path: eredua.txt
+
+K-fold cross-validation nahasmen matrizea:
+=== Confusion Matrix ===
+
+   a   b   c   <-- classified as
+ 719  48   0 |   a =  <=50K
+ 130 128   0 |   b =  >50K
+   0   0   0 |   c = suspicious
+
+Hold-out nahasmen matrizea (%70 train, %30 test):
+=== Confusion Matrix ===
+
+   a   b   c   <-- classified as
+ 222  14   0 |   a =  <=50K
+  34  37   0 |   b =  >50K
+   0   0   0 |   c = suspicious
