@@ -40,6 +40,8 @@ public class BoW {
 
         Instances dataNonSparse = Filter.useFilter(train, nonSparse);
 
+        //Attribute Selection
+
         //Gorde .arff -a
         ArffSaver saver = new ArffSaver();
         saver.setFile(new File(gordePath));
