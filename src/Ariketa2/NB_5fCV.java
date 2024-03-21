@@ -55,7 +55,7 @@ public class NB_5fCV {
         } catch (IOException e){e.printStackTrace();}
     }
 
-    public static String getEbaluazioEmaitzak(Evaluation evaluation) throws Exception {
+    public static String getEbaluazioEmaitzak(Evaluation evaluation) {
         try {
             System.out.println(evaluation.toSummaryString());
             System.out.println(evaluation.toMatrixString());

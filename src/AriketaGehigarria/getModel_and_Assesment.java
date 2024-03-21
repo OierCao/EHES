@@ -137,8 +137,8 @@ public class getModel_and_Assesment {
             recallVar += Math.pow(recallValues[i] - KFoldRecallAvg, 2);
             fMeasureVar += Math.pow(fMeasureValues[i] - KFoldFmeasureAvg, 2);
         }
-        double kFoldPrecisionDesb = Math.sqrt(precisionVar / iterKop);;
-        double KFoldRecallDesb = Math.sqrt(recallVar / iterKop);;
+        double kFoldPrecisionDesb = Math.sqrt(precisionVar / iterKop);
+        double KFoldRecallDesb = Math.sqrt(recallVar / iterKop);
         double KFoldFmeasureDesb = Math.sqrt(fMeasureVar / iterKop);
 
 
