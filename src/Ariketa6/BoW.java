@@ -1,9 +1,13 @@
 package Ariketa6;
 
+import weka.attributeSelection.BestFirst;
+import weka.attributeSelection.CfsSubsetEval;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.core.tokenizers.WordTokenizer;
 import weka.filters.Filter;
+import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.filters.unsupervised.instance.SparseToNonSparse;
 
@@ -22,14 +26,20 @@ public class BoW {
         Instances trainData = trainSource.getDataSet();
 
         if (trainData.classIndex() == -1)
-            trainData.setClassIndex(0);
+            trainData.setClassIndex(trainData.numAttributes()-1);
 
         // Sortu eta konfiguratu StringToWordVector filtroa
         StringToWordVector filter = new StringToWordVector();
-        filter.setOutputWordCounts(true);
+        filter.setOutputWordCounts(false);
         filter.setWordsToKeep(1000);
         filter.setLowerCaseTokens(true);
         filter.setDictionaryFileToSaveTo(new File(dictionaryPath));
+
+        //Tokenizer
+        WordTokenizer tokenizer = new WordTokenizer();
+        tokenizer.setDelimiters(".,;:'\"()?!\n -");
+        filter.setTokenizer(tokenizer);
+
         filter.setInputFormat(trainData);
 
         Instances train = Filter.useFilter(trainData, filter);
@@ -41,11 +51,16 @@ public class BoW {
         Instances dataNonSparse = Filter.useFilter(train, nonSparse);
 
         //Attribute Selection
+        AttributeSelection selector = new AttributeSelection();
+        selector.setEvaluator(new CfsSubsetEval());
+        selector.setSearch(new BestFirst());
+        selector.setInputFormat(dataNonSparse);
+        Instances newData = Filter.useFilter(dataNonSparse, selector);
 
         //Gorde .arff -a
         ArffSaver saver = new ArffSaver();
         saver.setFile(new File(gordePath));
-        saver.setInstances(dataNonSparse);
+        saver.setInstances(newData);
         saver.writeBatch();
     }
 }
