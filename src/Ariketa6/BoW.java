@@ -3,6 +3,7 @@ package Ariketa6;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.core.tokenizers.WordTokenizer;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.filters.unsupervised.instance.SparseToNonSparse;
@@ -21,14 +22,22 @@ public class BoW {
         DataSource trainSource = new DataSource(data);
         Instances trainData = trainSource.getDataSet();
 
-        if (trainData.classIndex() == -1)
+        if (trainData.classIndex() == -1){
             trainData.setClassIndex(0);
+        }
 
         // Sortu eta konfiguratu StringToWordVector filtroa
         StringToWordVector filter = new StringToWordVector();
-        filter.setOutputWordCounts(true);
-        filter.setWordsToKeep(1000);
+        filter.setOutputWordCounts(false);
+        filter.setWordsToKeep(20000); // poner el 20000 arriba como una variable
         filter.setLowerCaseTokens(true);
+
+
+        //Tokenizer
+        WordTokenizer tokenizer = new WordTokenizer();
+        tokenizer.setDelimiters(".,;:'\"()?!");
+        filter.setTokenizer(tokenizer);
+
         filter.setDictionaryFileToSaveTo(new File(dictionaryPath));
         filter.setInputFormat(trainData);
 

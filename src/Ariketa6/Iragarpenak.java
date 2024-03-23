@@ -1,6 +1,7 @@
 package Ariketa6;
 
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -39,11 +40,11 @@ public class Iragarpenak {
         Instances testNonSparse = Filter.useFilter(filterTestData, nonSparse);
 
 
-        NaiveBayes nb = new NaiveBayes();
-        nb.buildClassifier(trainData);
+        FilteredClassifier fc = new FilteredClassifier();
+        fc.buildClassifier(trainData);
 
         for (Instance ins:testNonSparse){
-            ins.setClassValue(nb.classifyInstance(ins));
+            ins.setClassValue(fc.classifyInstance(ins));
         }
 
         System.out.println("IRAGARPENAK" + "\n");
